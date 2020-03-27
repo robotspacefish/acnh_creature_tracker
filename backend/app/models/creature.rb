@@ -4,6 +4,17 @@ class Creature < ApplicationRecord
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
 
+  def self.all_out_at(start_time)
+    # military time
+    Creature.where(start_time: start_time)
+  end
+
+  def self.all_out_between(start_time, end_time)
+    # military time
+    # TODO >= start_time <= end_time
+    Creature.where(start_time: start_time, end_time: end_time)
+  end
+
   def set_times
     times = []
     if self.time == "All day"
