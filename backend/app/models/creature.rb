@@ -1,13 +1,8 @@
 class Creature < ApplicationRecord
   has_many :hemispheres
 
-  def self.all_fish
-    Creature.where(c_type: "fish")
-  end
-
-  def self.all_bugs
-    Creature.where(c_type: "bug")
-  end
+  scope :fish, -> { where(c_type: "fish") }
+  scope :bugs, -> { where(c_type: "bug") }
 
   def set_times
     times = []
