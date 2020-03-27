@@ -1,6 +1,6 @@
 class Creature < ApplicationRecord
   has_many :hemispheres
-
+  scope :out_all_day, -> { where(time: "All day") }
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
 
