@@ -3,4 +3,9 @@ class CreaturesController < ApplicationController
     creatures = Creature.all
     render  json: creatures
   end
+
+  def fish
+    fish = Creature.where(c_type: "fish")
+    render  json: fish
+  end
 end
