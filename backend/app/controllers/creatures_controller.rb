@@ -5,7 +5,7 @@ class CreaturesController < ApplicationController
   end
 
   def fish
-    fish = Creature.where(c_type: "fish")
+    fish = Creature.all_fish
     render  json: fish
   end
 end
