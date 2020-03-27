@@ -4,4 +4,8 @@ class Creature < ApplicationRecord
   def self.all_fish
     Creature.where(c_type: "fish")
   end
+
+  def self.all_bugs
+    Creature.where(c_type: "bug")
+  end
 end
