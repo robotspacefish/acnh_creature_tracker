@@ -1,3 +1,3 @@
 class Creature < ApplicationRecord
-  has_one :price
+  has_many :hemispheres
 end
