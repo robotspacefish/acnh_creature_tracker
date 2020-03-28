@@ -7,6 +7,8 @@ class Creature < ApplicationRecord
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
 
+  scope :sort_by_start_time, -> { order(:start_time) }
+  scope :sort_by_start_time_desc, -> { order('start_time DESC') }
   def self.all_out_at(start_time)
     # military time
     Creature.where(start_time: start_time)
