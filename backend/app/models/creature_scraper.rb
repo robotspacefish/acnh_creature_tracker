@@ -41,7 +41,6 @@ class CreatureScraper
 
   private
     def rows
-      byebug
       title = ''
       if @hemisphere == "north"
         title = "Northern"
