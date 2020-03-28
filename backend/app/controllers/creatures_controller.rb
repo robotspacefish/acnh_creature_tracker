@@ -5,7 +5,12 @@ class CreaturesController < ApplicationController
   end
 
   def fish
-    fish = Creature.all_fish
+    fish = Creature.fish
     render  json: fish
+  end
+
+  def current
+    creatures = Creature.available_now
+    render json: creatures
   end
 end
