@@ -1,5 +1,8 @@
 class Creature < ApplicationRecord
   has_many :hemispheres
+  has_many :creatures_users
+  has_many :users, through: :creatures_users
+
   scope :out_all_day, -> { where(time: "All day") }
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
