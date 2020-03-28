@@ -6,6 +6,7 @@ class Creature < ApplicationRecord
   scope :out_all_day, -> { where(time: "All day") }
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
+  # scope :info_to_render, ->{ select(:id, :name, :time, :location) }
 
   # scope :out_at_this_time, -> { where("start_time <= ? AND end_time > ?", Time.now.hour, Time.now.hour) }
   scope :sort_by_start_time, -> { order(:start_time) }
