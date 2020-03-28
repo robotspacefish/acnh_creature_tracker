@@ -30,7 +30,7 @@ class Creature < ApplicationRecord
         if meridiem == "PM"
           hour = hour.to_i + 12
         end
-        hour.to_s
+        hour
       end
     end
     self.update(start_time: times.first, end_time: times.last)
