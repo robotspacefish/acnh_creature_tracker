@@ -7,8 +7,25 @@ class Creature < ApplicationRecord
   scope :fish, -> { where(c_type: "fish") }
   scope :bugs, -> { where(c_type: "bug") }
 
+  # scope :out_at_this_time, -> { where("start_time <= ? AND end_time > ?", Time.now.hour, Time.now.hour) }
   scope :sort_by_start_time, -> { order(:start_time) }
   scope :sort_by_start_time_desc, -> { order('start_time DESC') }
+
+  def is_available_this_month?(hemisphere = "north")
+    current_hemisphere = self.hemispheres.find_by('h_type = ?', hemisphere)
+    current_month = current_hemisphere.current_month
+    current_hemisphere[current_month]
+  end
+
+  def is_available_at_this_time?
+    current_hour = Time.now.hour
+    self.start_time <= current_hour && self.end_time > current_hour
+  end
+
+  def self.available_now(hemisphere = "north")
+    Creature.select { |c| c.is_available_this_month?(hemisphere) && c.is_available_at_this_time? }
+  end
+
   def self.all_out_at(start_time)
     # military time
     Creature.where(start_time: start_time)
