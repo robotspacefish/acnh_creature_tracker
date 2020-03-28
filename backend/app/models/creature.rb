@@ -11,6 +11,14 @@ class Creature < ApplicationRecord
   scope :sort_by_start_time, -> { order(:start_time) }
   scope :sort_by_start_time_desc, -> { order('start_time DESC') }
 
+  def self.fish_available_now(hemisphere = "north")
+    Creature.fish.available_now(hemisphere)
+  end
+
+  def self.bugs_available_now(hemisphere = "north")
+    Creature.bugs.available_now(hemisphere)
+  end
+
   def is_available_this_month?(hemisphere = "north")
     current_hemisphere = self.hemispheres.find_by('h_type = ?', hemisphere)
     current_month = current_hemisphere.current_month
