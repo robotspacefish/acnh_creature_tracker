@@ -38,6 +38,7 @@ function renderTableHeader(creatureType) {
         <th>Name</th>
         <th>Type</th>
         <th>Location</th>
+        <th>Time</th>
         <th>Price</th>
       </tr>
     </thead>
@@ -58,6 +59,7 @@ function renderCreature(c) {
       <th>${c.name}</th>
       <th>${c.c_type}</th>
       <th>${c.location}</th>
+      <th>${c.time}</th>
       <th>${c.price}</th>
     </tr>
   `;
