@@ -9,8 +9,8 @@ class CreateCreature < ActiveRecord::Migration[6.0]
       t.string :price
       t.string :location
       t.string :time
-      t.string :start_time
-      t.string :end_time
+      t.integer :start_time
+      t.integer :end_time
     end
   end
 end

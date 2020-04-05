@@ -8,5 +8,13 @@
 
 Creature.destroy_all
 Hemisphere.destroy_all
+User.destroy_all
+
 CreatureScraper.scrape
 Creature.set_all_creatures_times
+
+u = User.create(username: "jess", password: "password", email: "jess@gmail.com")
+u.creatures << Creature.first
+u.creatures << Creature.second
+u.creatures << Creature.third
+u.creatures << Creature.last
