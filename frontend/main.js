@@ -63,10 +63,22 @@ function renderCreature(c) {
   `;
 }
 
-
 selectCreatureType.addEventListener('click', (e) => {
   // fetchCreatures("current", extractType(e.target.id))
   renderCreatures(extractType(e.target.id))
 });
 
-window.onload = () => fetchCreatures("current", "all");
+window.onload = () => {
+  const dt = new Date();
+  renderDateTime(dt);
+  fetchCreatures("current", "all");
+};
+
+function renderDateTime(dt) {
+  const cdDisplay = document.getElementById('current-date');
+  const ctDisplay = document.getElementById('current-time');
+  ctDisplay.innerText = dt.toLocaleTimeString();
+  cdDisplay.innerText = dt.toDateString();
+}
+
+
