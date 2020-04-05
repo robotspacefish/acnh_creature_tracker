@@ -22,8 +22,7 @@ body {
   padding: 20px;
 }
 
-#creature-list__nav-select-type .nav-link {
-  background: #50B36F;
+ .nav-link {
   padding: 10px;
   cursor: pointer;
 }
@@ -33,8 +32,10 @@ body {
   border-right: 1px solid #275836;
 }
 
-#creature-list__nav-select-type .nav-link:hover {
-  /* box-shadow: 2px 2px 5px #275836; */
+
+.creature-list__header {
+  display: flex;
+  justify-content: space-between;
 }
 
 section {
@@ -47,3 +48,18 @@ section {
   text-align: center;
 }
 
+#creature-list__creatures {
+  width: 100%;
+}
+
+table {
+  border: 1px solid black;
+}
+
+table, th {
+  padding: 15px;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+}
