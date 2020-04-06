@@ -28,7 +28,9 @@ class Creature < ApplicationRecord
 
   def is_available_at_this_time?
     current_hour = Time.now.hour
-    self.start_time <= current_hour && self.end_time > current_hour
+    (self.start_time <= current_hour && self.end_time > current_hour) ||
+    # (self.start_time == current_hour && self.end_time < current_hour)
+    (self.start_time <= current_hour && self.end_time < self.start_time)
   end
 
   def self.available_now(hemisphere = "north")
