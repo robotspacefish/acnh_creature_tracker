@@ -19,4 +19,15 @@ class Available < ApplicationRecord
     end
     self.update(start_time: times.first, end_time: times.last)
   end
+
+  def fix_formatting
+    times = self.time.upcase.split(" - ")
+
+    times = times.collect do |t|
+      t.insert(-3, " ")
+    end
+
+    self.update(time: times.join(" - "))
+  end
+
 end
