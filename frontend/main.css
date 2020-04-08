@@ -36,6 +36,7 @@ body {
 .creature-list__header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 section {
@@ -62,4 +63,10 @@ table, th {
 
 th, td {
   border-bottom: 1px solid #ddd;
+}
+
+#creature-list__nav-sort,
+#creature-list__nav-hemisphere-select {
+  border: 1px solid black;
+  padding: 3px;
 }
