@@ -19,6 +19,7 @@ class Available < ApplicationRecord
   end
 
   def self.set_all_creatures_times
+    # todo update to work from Available instead of Creature
     Creature.all.each do |c|
       c.set_times
     end
