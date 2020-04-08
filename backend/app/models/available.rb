@@ -8,12 +8,17 @@ class Available < ApplicationRecord
     if self.time == "All day"
       times = [0, 23]
     else
-      # todo account for incorrectly formatted times ex. 4am - 7pm
-      times = time.split(" - ").collect do |t|
+      if self.time.include?("am") # formatted like: 4am - 7pm
+       self.fix_formatting
+      end
+      split_times = self.time.split(" - ")
+      times = split_times.collect do |t|
         hour, meridiem = t.split(" ")
+
         if meridiem == "PM"
           hour = hour.to_i + 12
         end
+
         hour
       end
     end
