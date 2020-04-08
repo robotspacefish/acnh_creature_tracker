@@ -1,12 +1,14 @@
 class Available < ApplicationRecord
   has_many :availables_creatures
   has_many :creatures, through: :availables_creatures
+  after_initialize :set_times
 
-   def set_times
+  def set_times
     times = []
     if self.time == "All day"
       times = [0, 23]
     else
+      # todo account for incorrectly formatted times ex. 4am - 7pm
       times = time.split(" - ").collect do |t|
         hour, meridiem = t.split(" ")
         if meridiem == "PM"
@@ -16,12 +18,5 @@ class Available < ApplicationRecord
       end
     end
     self.update(start_time: times.first, end_time: times.last)
-  end
-
-  def self.set_all_creatures_times
-    # todo update to work from Available instead of Creature
-    Creature.all.each do |c|
-      c.set_times
-    end
   end
 end
