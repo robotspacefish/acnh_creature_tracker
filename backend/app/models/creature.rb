@@ -8,7 +8,6 @@ class Creature < ApplicationRecord
   scope :bugs, -> { where(c_type: "bug") }
   # scope :info_to_render, ->{ select(:id, :name, :time, :location) }
 
-  # scope :out_at_this_time, -> { where("start_time <= ? AND end_time > ?", Time.now.hour, Time.now.hour) }
   scope :sort_by_start_time, -> { order(:start_time) }
   scope :sort_by_start_time_desc, -> { order('start_time DESC') }
 
@@ -28,23 +27,25 @@ class Creature < ApplicationRecord
 
   def is_available_at_this_time?
     current_hour = Time.now.hour
-    self.start_time <= current_hour && self.end_time > current_hour
+    (self.start_time <= current_hour && self.end_time > current_hour) ||
+    # (self.start_time <= current_hour && self.end_time < self.start_time) ||
+    (self.start_time >= current_hour && self.end_time < self.start_time)
   end
 
   def self.available_now(hemisphere = "north")
     Creature.select { |c| c.is_available_this_month?(hemisphere) && c.is_available_at_this_time? }
   end
 
-  def self.all_out_at(start_time)
-    # military time
-    Creature.where(start_time: start_time)
-  end
+  # def self.all_out_at(start_time)
+  #   # military time
+  #   Creature.where(start_time: start_time)
+  # end
 
-  def self.all_out_between(start_time, end_time)
-    # military time
-    # TODO >= start_time <= end_time
-    Creature.where(start_time: start_time, end_time: end_time)
-  end
+  # def self.all_out_between(start_time, end_time)
+  #   # military time
+  #   # TODO >= start_time <= end_time
+  #   Creature.where(start_time: start_time, end_time: end_time)
+  # end
 
   def set_times
     times = []
