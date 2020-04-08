@@ -6,15 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Creature.destroy_all
-Hemisphere.destroy_all
+CreatureScraper.destroy
 User.destroy_all
 
 CreatureScraper.scrape
-Creature.set_all_creatures_times
 
-u = User.create(username: "jess", password: "password", email: "jess@gmail.com")
-u.creatures << Creature.first
-u.creatures << Creature.second
-u.creatures << Creature.third
-u.creatures << Creature.last
+# u = User.create(username: "jess", password: "password", email: "jess@gmail.com")
+# u.creatures << Creature.first
+# u.creatures << Creature.second
+# u.creatures << Creature.third
+# u.creatures << Creature.last

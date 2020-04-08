@@ -2,6 +2,8 @@ class Creature < ApplicationRecord
   has_many :hemispheres
   has_many :creatures_users
   has_many :users, through: :creatures_users
+  has_many :availables_creatures
+  has_many :availables, through: :availables_creatures
 
   scope :out_all_day, -> { where(time: "All day") }
   scope :fish, -> { where(c_type: "fish") }
@@ -26,10 +28,8 @@ class Creature < ApplicationRecord
   end
 
   def is_available_at_this_time?
-    current_hour = Time.now.hour
-    (self.start_time <= current_hour && self.end_time > current_hour) ||
-    # (self.start_time <= current_hour && self.end_time < self.start_time) ||
-    (self.start_time >= current_hour && self.end_time < self.start_time)
+    # todo - account for creatures with multiple availables
+    self.availables.first.is_available_at_this_time?
   end
 
   def self.available_now(hemisphere = "north")
@@ -46,26 +46,4 @@ class Creature < ApplicationRecord
   #   # TODO >= start_time <= end_time
   #   Creature.where(start_time: start_time, end_time: end_time)
   # end
-
-  def set_times
-    times = []
-    if self.time == "All day"
-      times = [0, 23]
-    else
-      times = time.split(" - ").collect do |t|
-        hour, meridiem = t.split(" ")
-        if meridiem == "PM"
-          hour = hour.to_i + 12
-        end
-        hour
-      end
-    end
-    self.update(start_time: times.first, end_time: times.last)
-  end
-
-  def self.set_all_creatures_times
-    Creature.all.each do |c|
-      c.set_times
-    end
-  end
 end

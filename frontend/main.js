@@ -61,7 +61,7 @@ function renderCreature(c) {
       <th>${c.c_type}</th>
       <th>${c.location}</th>
       <th>${c.shadow_size ? c.shadow_size : "NA"}
-      <th>${c.time}</th>
+      <th>${c.availables[0].time}</th>
       <th>${c.price}</th>
     </tr>
   `;
