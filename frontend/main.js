@@ -1,5 +1,7 @@
 const selectCreatureType = document.getElementById('creature-list__nav-select-type');
+const sortCreatureNav = document.getElementById('creature-list__nav-sort');
 const creaturesDisplay = document.getElementById('creature-list__creatures');
+const creatureTypeDisplay = document.getElementById('creature-type');
 let creatures = [];
 
 const extractType = id => id.substring(7);
@@ -17,14 +19,6 @@ function fetchCreatures(timePeriod, creatureType) {
 }
 
 function filterCreatures(data) {
-  // switch (creatureType) {
-  //   case "fish":
-  //     return getFish();
-  //   case "bugs":
-  //     return getBugs();
-  //   default:
-  //     return [...data];
-  // }
   creatures.all = [...data];
   creatures.fish = getFish(data);
   creatures.bugs = getBugs(data);
@@ -38,6 +32,7 @@ function renderTableHeader(creatureType) {
         <th>Name</th>
         <th>Type</th>
         <th>Location</th>
+        <th>Shadow Size</th>
         <th>Time</th>
         <th>Price</th>
       </tr>
@@ -45,10 +40,16 @@ function renderTableHeader(creatureType) {
   `
 }
 
-function renderCreatures(creatureType) {
+function renderCreatures(creatureType, creaturesToRender = creatures) {
+  if (creatureType === "all") {
+    creatureTypeDisplay.innerText = "Creatures";
+  } else if (creatureType === "bugs" || creatureType === "fish") {
+    creatureTypeDisplay.innerText = creatureType[0].toUpperCase() + creatureType.slice(1);
+  }
+
   creaturesDisplay.innerHTML = renderTableHeader(creatureType);
 
-  creatures[creatureType].forEach(c => {
+  creaturesToRender[creatureType].forEach(c => {
     creaturesDisplay.innerHTML += renderCreature(c);
   })
 }
@@ -59,6 +60,7 @@ function renderCreature(c) {
       <th>${c.name}</th>
       <th>${c.c_type}</th>
       <th>${c.location}</th>
+      <th>${c.shadow_size ? c.shadow_size : "NA"}
       <th>${c.time}</th>
       <th>${c.price}</th>
     </tr>
@@ -66,7 +68,6 @@ function renderCreature(c) {
 }
 
 selectCreatureType.addEventListener('click', (e) => {
-  // fetchCreatures("current", extractType(e.target.id))
   renderCreatures(extractType(e.target.id))
 });
 
@@ -83,4 +84,7 @@ function renderDateTime(dt) {
   cdDisplay.innerText = dt.toDateString();
 }
 
+// sortCreatureNav.addEventListener('click', (e) => {
+
+// })
 
