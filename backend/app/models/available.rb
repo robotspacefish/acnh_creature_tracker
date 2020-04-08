@@ -26,15 +26,30 @@ class Available < ApplicationRecord
     self.update(start_time: times.first, end_time: times.last)
   end
 
-  def fix_formatting
-    times = self.time.upcase.split(" - ")
+  def is_available_at_this_time?
+    return true if self.time == "All day"
 
-    times = times.collect do |t|
-      # start at -3 for index right before am/pm
-      t.insert(-3, " ")
-    end
+    # set time instances for start & end times based on current time for comparison
+    ct = Time.now
+    start_time = Time.new(ct.year, ct.month, ct.day, self.start_time, 0, 0, Time.now.utc_offset)
 
-    self.update(time: times.join(" - "))
+    # if start time < end time then it goes into the next day
+    et_day = self.end_time < self.start_time ? ct.day + 1 : ct.day
+    end_time = Time.new(ct.year, ct.month, et_day, self.end_time, 0, 0, Time.now.utc_offset)
+
+    ct.between?(start_time, end_time)
   end
+
+  private
+    def fix_formatting
+      times = self.time.upcase.split(" - ")
+
+      times = times.collect do |t|
+        # start at -3 for index right before am/pm
+        t.insert(-3, " ")
+      end
+
+      self.update(time: times.join(" - "))
+    end
 
 end
