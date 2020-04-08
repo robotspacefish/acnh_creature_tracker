@@ -11,6 +11,7 @@ class Available < ApplicationRecord
       if self.time.include?("am") # formatted like: 4am - 7pm
        self.fix_formatting
       end
+
       split_times = self.time.split(" - ")
       times = split_times.collect do |t|
         hour, meridiem = t.split(" ")
@@ -29,6 +30,7 @@ class Available < ApplicationRecord
     times = self.time.upcase.split(" - ")
 
     times = times.collect do |t|
+      # start at -3 for index right before am/pm
       t.insert(-3, " ")
     end
 
