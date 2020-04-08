@@ -28,8 +28,9 @@ class Creature < ApplicationRecord
   end
 
   def is_available_at_this_time?
-    # todo - account for creatures with multiple availables
-    self.availables.first.is_available_at_this_time?
+    self.availables.collect do |t|
+      t.is_available_at_this_time?
+    end.any?
   end
 
   def self.available_now(hemisphere = "north")
