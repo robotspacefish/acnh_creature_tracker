@@ -112,5 +112,6 @@ class CreatureScraper
     def self.destroy
       Creature.destroy_all
       Hemisphere.destroy_all
+      Available.destroy_all
     end
 end
