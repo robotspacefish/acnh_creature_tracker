@@ -22,6 +22,7 @@ class CreatureScraper
     rows.each do |row_doc|
       creature = nil
       if @hemisphere == "south"
+        # creature already exists because northern hemisphere has already been set
         creature = Creature.find_by(name: row_doc[0].text.lstrip.gsub("\n", "").downcase)
       else
         case @type
@@ -31,6 +32,14 @@ class CreatureScraper
             creature = Creature.create(scrape_fish_row(row_doc))
         end
       end
+
+      # only add times on first scrape for each creature (northern hemisphere)
+      if @hemisphere == "north"
+        # index is set depending on creature type because fish have an extra
+        # column for shadow size
+        creature.availables << Available.find_or_create_by(time: scrape_time(row_doc, @type == :fish ? 5 : 4))
+      end
+
       creature.hemispheres.build(scrape_hemisphere(row_doc, @type == :fish ? 6 : 5))
       creature.save
     end
@@ -58,7 +67,7 @@ class CreatureScraper
         :price => row[2].text.lstrip.gsub("\n", ""),
         :location => row[3].text.lstrip.gsub("\n", ""),
         :shadow_size => row[4].text.lstrip.gsub("\n", ""),
-        :time => row[5].text.lstrip.gsub("\n", "")
+        # :time => row[5].text.lstrip.gsub("\n", "")
       }
     end
 
@@ -69,8 +78,12 @@ class CreatureScraper
         :url => row[0].css("a").attribute("href").value,
         :price => row[2].text.lstrip.gsub("\n", ""),
         :location => row[3].text.lstrip.gsub("\n", ""),
-        :time => row[4].text.lstrip.gsub("\n", ""),
+        # :time => row[4].text.lstrip.gsub("\n", ""),
       }
+    end
+
+    def scrape_time(row, index)
+      row[index].text.lstrip.gsub("\n", "")
     end
 
     def scrape_hemisphere(row, start_index)
