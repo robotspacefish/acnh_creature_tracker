@@ -1,7 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
 class CreatureScraper
-
   def initialize(path, c_type, h_type)
     @doc = Nokogiri::HTML(open(path))
     @type = c_type
@@ -37,7 +36,18 @@ class CreatureScraper
       if @hemisphere == "north"
         # index is set depending on creature type because fish have an extra
         # column for shadow size
-        creature.availables << Available.find_or_create_by(time: scrape_time(row_doc, @type == :fish ? 5 : 4))
+
+        time = scrape_time(row_doc, @type == :fish ? 5 : 4)
+        if time.include?("&")
+          # creature has multiple available times in a day
+
+          time1, time2 = time.split(" & ")
+          creature.set_available(time1)
+          creature.set_available(time2)
+        else
+          creature.set_available(time)
+        end
+
       end
 
       creature.hemispheres.build(scrape_hemisphere(row_doc, @type == :fish ? 6 : 5))
