@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_225526) do
+ActiveRecord::Schema.define(version: 2020_04_08_160440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "availables", force: :cascade do |t|
+    t.string "time"
+    t.integer "start_time"
+    t.integer "end_time"
+  end
+
+  create_table "availables_creatures", id: false, force: :cascade do |t|
+    t.bigint "available_id", null: false
+    t.bigint "creature_id", null: false
+  end
 
   create_table "creatures", force: :cascade do |t|
     t.string "name"
@@ -23,9 +34,6 @@ ActiveRecord::Schema.define(version: 2020_03_28_225526) do
     t.string "shadow_size"
     t.string "price"
     t.string "location"
-    t.string "time"
-    t.integer "start_time"
-    t.integer "end_time"
   end
 
   create_table "creatures_users", id: false, force: :cascade do |t|

@@ -6,7 +6,7 @@ class CreatureSerializer
   def to_serialized_json
     options = {
       except: [:image_url, :url],
-      include: [:hemispheres]
+      include: [:hemispheres, :availables]
     }
 
     @creature.to_json(options)
