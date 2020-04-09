@@ -37,6 +37,10 @@ class Creature < ApplicationRecord
     Creature.select { |c| c.is_available_this_month?(hemisphere) && c.is_available_at_this_time? }
   end
 
+  def set_available(t)
+    self.availables << Available.find_or_create_by(time: t)
+  end
+
   # def self.all_out_at(start_time)
   #   # military time
   #   Creature.where(start_time: start_time)
