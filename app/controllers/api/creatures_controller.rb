@@ -1,4 +1,4 @@
-class CreaturesController < ApplicationController
+class Api::CreaturesController < ApplicationController
   def index
     creatures = Creature.all
     render  json: CreatureSerializer.new(creatures).to_serialized_json
