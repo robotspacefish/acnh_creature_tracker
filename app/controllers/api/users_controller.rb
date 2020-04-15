@@ -8,4 +8,24 @@ class Api::UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     render json: UserSerializer.new(user).to_serialized_json
   end
+
+  def create
+    user = User.create(user_params)
+    byebug
+
+    if user.save
+      session[:user_id] = user.id
+      render json: UserSerializer.new(user).to_serialized_json
+    else
+      render json: {
+        error: "Could not sign up user"
+      }
+    end
+  end
+
+  private
+    def user_params
+      params.permit(:username, :password, :hemisphere)
+    end
+
 end
