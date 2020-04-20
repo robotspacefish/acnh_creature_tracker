@@ -11,14 +11,13 @@ class Api::UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
-    byebug
 
     if user.save
       session[:user_id] = user.id
       render json: UserSerializer.new(user).to_serialized_json
     else
       render json: {
-        error: "Could not sign up user"
+        error: user.errors
       }
     end
   end
