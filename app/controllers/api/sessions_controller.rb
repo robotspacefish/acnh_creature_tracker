@@ -7,7 +7,9 @@ class Api::SessionsController < ApplicationController
       render json: UserSerializer.new(user).to_serialized_json
     else
       render json: {
-        error: "Invalid login credentials"
+        error: {
+          login: "Invalid Credentials"
+        }
       }
     end
   end
