@@ -8,6 +8,7 @@
 
 CreatureScraper.destroy
 User.destroy_all
+CreaturesUser.destroy_all
 
 CreatureScraper.scrape
 
