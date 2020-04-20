@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_160440) do
+ActiveRecord::Schema.define(version: 2020_04_20_165952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 2020_04_08_160440) do
     t.string "location"
   end
 
-  create_table "creatures_users", id: false, force: :cascade do |t|
-    t.bigint "creature_id", null: false
-    t.bigint "user_id", null: false
+  create_table "creatures_users", force: :cascade do |t|
+    t.bigint "creature_id"
+    t.bigint "user_id"
+    t.index ["creature_id"], name: "index_creatures_users_on_creature_id"
+    t.index ["user_id"], name: "index_creatures_users_on_user_id"
   end
 
   create_table "hemispheres", force: :cascade do |t|
@@ -64,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_160440) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "email"
+    t.string "hemisphere"
   end
 
 end

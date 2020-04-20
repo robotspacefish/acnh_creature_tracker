@@ -1,4 +1,4 @@
-class CreaturesController < ApplicationController
+class Api::CreaturesController < ApplicationController
   def index
     creatures = Creature.all
     render  json: CreatureSerializer.new(creatures).to_serialized_json
@@ -15,7 +15,10 @@ class CreaturesController < ApplicationController
   end
 
   def current
-    creatures = Creature.available_now
+    creatures = {
+      north:  Creature.available_now,
+      south:  Creature.available_now("south")
+    }
     render json: CreatureSerializer.new(creatures).to_serialized_json
   end
 end
