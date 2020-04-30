@@ -20,7 +20,7 @@ class Available < ApplicationRecord
           hour = hour.to_i + 12
         end
 
-        hour
+        hour.to_i
       end
     end
     self.update(start_time: times.first, end_time: times.last)
