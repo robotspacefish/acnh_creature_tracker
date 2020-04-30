@@ -115,9 +115,9 @@ class CreatureScraper
 
     end
 
-    def make_int(value)
-      value.delete(",").to_i
-    end
+    # def make_int(value)
+    #   value.delete(",").to_i
+    # end
 
     def self.destroy
       Creature.destroy_all

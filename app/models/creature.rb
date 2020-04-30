@@ -40,15 +40,4 @@ class Creature < ApplicationRecord
   def set_available(t)
     self.availables << Available.find_or_create_by(time: t)
   end
-
-  # def self.all_out_at(start_time)
-  #   # military time
-  #   Creature.where(start_time: start_time)
-  # end
-
-  # def self.all_out_between(start_time, end_time)
-  #   # military time
-  #   # TODO >= start_time <= end_time
-  #   Creature.where(start_time: start_time, end_time: end_time)
-  # end
 end
