@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3000', 'http://localhost:3001', 'https://robotspacefish.github.io', 'https://robotspacefish.dev'
+    origins 'http://localhost:3000', 'http://localhost:3001', 'hoosthere.netlify.app', 'https://robotspacefish.dev'
 
     resource '*',
       headers: :any,
